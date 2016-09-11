@@ -4,7 +4,6 @@ RSpec.describe BitmapEditor::Editor do
 
   PROMPT= '>'
 
-
   describe '#run' do
     before do
       allow(subject).to receive(:loop).and_yield
@@ -29,6 +28,33 @@ RSpec.describe BitmapEditor::Editor do
 
       it 'prints HELP to screen' do
         expect { subject.run }.to output(help_message).to_stdout
+      end
+    end
+  end
+
+  describe '#create_image' do
+
+    before do
+      allow(BitmapEditor::Image).to receive(:new).and_call_original
+    end
+
+    context 'with valid dimensions' do
+
+      let(:width)  { 100 }
+      let(:height) { 200 }
+
+      it 'creates the image' do
+        expect { subject.create_image(width, height) }.to output("Image created.\n").to_stdout
+      end
+    end
+
+    context 'with invalid dimensions' do
+
+      let(:width)  { 10 }
+      let(:height) { 2000 }
+
+      it 'prints error image' do
+        expect { subject.create_image(width, height) }.to output(BitmapEditor::Image::INVALID_HEIGHT_MESSAGE+"\n").to_stdout
       end
     end
   end
