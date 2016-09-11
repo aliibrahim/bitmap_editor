@@ -82,7 +82,7 @@ module BitmapEditor
   end
 
   class OutOfBoundError < StandardError
-    def initialize(message= "Given pixel is out of boundary")
+    def initialize(message= "Given input is out of boundary of the image.")
       super(message)
     end
   end
