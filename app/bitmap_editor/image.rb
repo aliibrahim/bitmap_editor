@@ -61,6 +61,10 @@ module BitmapEditor
       end
     end
 
+    def display
+      @grid.each {|row| puts row.join(' ') }
+    end
+
     private
 
     def initialize_grid

@@ -192,6 +192,40 @@ RSpec.describe BitmapEditor::Editor do
     end
   end
 
+  describe '#display_image' do
+    context 'when image is not present' do
+
+      it 'prints NoImageError error message' do
+        expect { subject.display_image }.to output(BitmapEditor::NoImageError.new.message+"\n").to_stdout
+      end
+    end
+
+    context 'when image is present' do
+      let(:expected_output) do <<~IMAGE
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+       O O O O O O O O O O
+IMAGE
+      end
+
+      before do
+        image = BitmapEditor::Image.new(width: 10, height: 10)
+        allow(subject).to receive(:image).and_return image
+      end
+
+      it 'prints image' do
+        expect { subject.display_image }.to output(expected_output).to_stdout
+      end
+    end
+  end
+
   private
     def exit_message
       welcome_message(BitmapEditor::Editor::EXIT_MESSAGE + "\n")

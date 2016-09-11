@@ -42,6 +42,8 @@ HELP
           when 'H'
             raise InvalidArguments if args.length != 4
             editor.color_image_horizontal(*args)
+          when 'S'
+            editor.display_image
           else
             puts UNKNOWN_COMMAND
         end

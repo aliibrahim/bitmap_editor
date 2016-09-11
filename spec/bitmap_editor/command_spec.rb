@@ -140,6 +140,17 @@ RSpec.describe BitmapEditor::Command do
       end
     end
 
+    context 'command S' do
+      before do
+        allow(subject).to receive(:command) { 'S' }
+      end
+      it 'allows editor to call display_image' do
+        expect(subject.editor).to receive(:display_image)
+
+        subject.process
+      end
+    end
+
     context 'unknown command' do
       before do
         allow(subject).to receive(:command) { 'abc' }

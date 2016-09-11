@@ -72,6 +72,15 @@ module BitmapEditor
       end
     end
 
+    def display_image
+      begin
+        raise NoImageError unless image
+        image.display
+      rescue NoImageError => e
+        puts e
+      end
+    end
+
     private
 
     def get_command_from_user
