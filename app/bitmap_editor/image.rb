@@ -51,6 +51,16 @@ module BitmapEditor
       end
     end
 
+    def color_horizontal(start_column, end_column, row, color)
+      start_column, end_column, row = start_column.to_i, end_column.to_i, row.to_i
+
+      raise OutOfBoundError unless horizontal_range_within_boundary?(start_column, end_column, row)
+      start_column, end_column = [start_column, end_column].sort # Since the user can draw from right to left
+      (start_column..end_column).each do |column|
+        @grid[row-1][column-1] = color
+      end
+    end
+
     private
 
     def initialize_grid
@@ -67,5 +77,10 @@ module BitmapEditor
       end_row.between?(MIN_HEIGHT, @height)
     end
 
+    def horizontal_range_within_boundary?(start_column, end_column, row)
+      start_column.between?(MIN_WIDTH, @width) &&
+      end_column.between?(MIN_WIDTH, @width) &&
+      row.between?(MIN_HEIGHT, @height)
+    end
   end
 end

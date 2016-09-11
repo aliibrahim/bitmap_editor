@@ -86,4 +86,33 @@ RSpec.describe BitmapEditor::Image do
       end
     end
   end
+
+  describe '#color_horizontal' do
+    context 'within valid dimensions' do
+
+      let(:expected_grid) {[['C','C'],['O','O'],['O','O']]}
+
+      before do
+        subject.grid = [['O','O'],['O','O'],['O','O']]
+      end
+
+      it 'horizontally colors the image' do
+        subject.color_horizontal(1, 2, 1, 'C')
+
+        expect(subject.grid).to eq expected_grid
+      end
+
+      it 'horizontally colors the image from right to left' do
+        subject.color_horizontal(2, 1, 1, 'C')
+
+        expect(subject.grid).to eq expected_grid
+      end
+    end
+
+    context 'with invalid dimensions' do
+      it 'raises OutOfBoundError exception' do
+        expect { subject.color_horizontal(3, 1, 2, 'C') }.to raise_error(BitmapEditor::OutOfBoundError)
+      end
+    end
+  end
 end
