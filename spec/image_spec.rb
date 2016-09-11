@@ -34,4 +34,27 @@ RSpec.describe BitmapEditor::Image do
       end
     end
   end
+
+  describe '#color_pixel' do
+    context 'within valid dimensions' do
+
+      let(:expected_grid) {[['O','C'],['O','O'],['O','O']]}
+
+      before do
+        subject.grid = [['O','0'],['O','O'],['O','O']]
+      end
+
+      it 'colors the given pixel' do
+        subject.color_pixel(1,2,'C')
+
+        expect(subject.grid).to eq expected_grid
+      end
+    end
+
+    context 'with invalid dimensions' do
+      it 'raises OutOfBoundError exception' do
+        expect { subject.color_pixel(10,2,'C') }.to raise_error(BitmapEditor::OutOfBoundError)
+      end
+    end
+  end
 end

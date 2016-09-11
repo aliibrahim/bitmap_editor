@@ -33,6 +33,9 @@ HELP
             editor.create_image(*args)
           when 'C'
             editor.clear_image
+          when 'L'
+            raise InvalidArguments if args.length != 3
+            editor.color_image_pixel(*args)
           else
             puts UNKNOWN_COMMAND
         end

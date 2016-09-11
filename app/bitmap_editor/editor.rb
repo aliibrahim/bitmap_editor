@@ -42,6 +42,16 @@ module BitmapEditor
       end
     end
 
+    def color_image_pixel(row, column, color)
+      begin
+        raise NoImageError unless image
+        image.color_pixel(row, column, color)
+        puts 'Pixel colored.'
+      rescue NoImageError, OutOfBoundError => e
+        puts e
+      end
+    end
+
     private
 
     def get_command_from_user
@@ -67,6 +77,12 @@ module BitmapEditor
 
   class NoImageError < StandardError
     def initialize(message= "Please create an image first before trying this operation or press ? for help")
+      super(message)
+    end
+  end
+
+  class OutOfBoundError < StandardError
+    def initialize(message= "Given pixel is out of boundary")
       super(message)
     end
   end
