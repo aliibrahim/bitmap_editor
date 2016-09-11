@@ -84,6 +84,34 @@ RSpec.describe BitmapEditor::Command do
       end
     end
 
+    context 'command V' do
+
+      context 'with valid arguments' do
+        let(:args) { ['200', '10', '20', 'C']}
+
+        before do
+          allow(subject).to receive(:command) { 'V 200 10 20 C' }
+        end
+
+        it 'allows editor to color pixel image' do
+          expect(subject.editor).to receive(:color_image_vertical).with(*args)
+
+          subject.process
+        end
+      end
+
+      context 'with invalid arguments' do
+        before do
+          allow(subject).to receive(:command) { 'V 10 Helloworld' }
+        end
+
+        it 'prints exception message to screen' do
+          expect(subject.editor).to_not receive(:color_image_pixel)
+          expect { subject.process }.to output(BitmapEditor::InvalidArguments.new.message+ "\n").to_stdout
+        end
+      end
+    end
+
     context 'unknown command' do
       before do
         allow(subject).to receive(:command) { 'abc' }
