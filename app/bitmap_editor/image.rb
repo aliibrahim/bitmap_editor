@@ -5,8 +5,8 @@ module BitmapEditor
 
     MIN_WIDTH  = 1
     MIN_HEIGHT = 1
-    MAX_WIDTH  = 255
-    MAX_HEIGHT = 255
+    MAX_WIDTH  = 250
+    MAX_HEIGHT = 250
 
     INVALID_WIDTH_MESSAGE  = "Invalid width given. Please ensure width is between #{MIN_WIDTH} and #{MAX_WIDTH}"
     INVALID_HEIGHT_MESSAGE = "Invalid height given. Please ensure height is between #{MIN_HEIGHT} and #{MAX_HEIGHT}"
