@@ -39,6 +39,9 @@ HELP
           when 'V'
             raise InvalidArguments if args.length != 4
             editor.color_image_vertical(*args)
+          when 'H'
+            raise InvalidArguments if args.length != 4
+            editor.color_image_horizontal(*args)
           else
             puts UNKNOWN_COMMAND
         end
