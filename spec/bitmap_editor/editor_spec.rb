@@ -154,6 +154,44 @@ RSpec.describe BitmapEditor::Editor do
     end
   end
 
+  describe '#color_image_horizontal' do
+
+    let(:start_column) { 1 }
+    let(:end_column)   { 3 }
+    let(:row)   { 4 }
+    let(:color) {'C'}
+
+    context 'when image is not present' do
+      it 'prints NoImageError error message' do
+        expect { subject.color_image_horizontal(start_column, end_column, row, color) }.to output(BitmapEditor::NoImageError.new.message+"\n").to_stdout
+      end
+    end
+
+    context 'when image is present' do
+      context 'when pixel is within dimensions' do
+        before do
+          image = BitmapEditor::Image.new(width: 3, height: 4)
+          allow(subject).to receive(:image).and_return image
+        end
+
+        it 'prints Pixel colored message' do
+          expect { subject.color_image_horizontal(start_column, end_column, row, color) }.to output("Horizontal colored.\n").to_stdout
+        end
+      end
+
+      context 'when pixel is outside of dimensions' do
+        before do
+          image = BitmapEditor::Image.new(width: 2, height: 2)
+          allow(subject).to receive(:image).and_return image
+        end
+
+        it 'prints OutOfBoundError message' do
+          expect { subject.color_image_horizontal(start_column, end_column, row, color) }.to output(BitmapEditor::OutOfBoundError.new.message+"\n").to_stdout
+        end
+      end
+    end
+  end
+
   private
     def exit_message
       welcome_message(BitmapEditor::Editor::EXIT_MESSAGE + "\n")

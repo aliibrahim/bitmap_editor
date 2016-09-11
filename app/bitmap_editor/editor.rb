@@ -62,6 +62,16 @@ module BitmapEditor
       end
     end
 
+    def color_image_horizontal(start_column, end_column, row, color)
+      begin
+        raise NoImageError unless image
+        image.color_horizontal(start_column, end_column, row, color)
+        puts 'Horizontal colored.'
+      rescue NoImageError, OutOfBoundError => e
+        puts e
+      end
+    end
+
     private
 
     def get_command_from_user
