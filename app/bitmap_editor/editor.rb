@@ -52,6 +52,16 @@ module BitmapEditor
       end
     end
 
+    def color_image_vertical(column, start_row, end_row, color)
+      begin
+        raise NoImageError unless image
+        image.color_vertical(column, start_row, end_row, color)
+        puts 'Vertical colored.'
+      rescue NoImageError, OutOfBoundError => e
+        puts e
+      end
+    end
+
     private
 
     def get_command_from_user

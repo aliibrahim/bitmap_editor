@@ -116,6 +116,44 @@ RSpec.describe BitmapEditor::Editor do
     end
   end
 
+  describe '#color_image_vertical' do
+
+    let(:column)    { 2 }
+    let(:start_row) { 2 }
+    let(:end_row)   { 4 }
+    let(:color) {'C'}
+
+    context 'when image is not present' do
+      it 'prints NoImageError error message' do
+        expect { subject.color_image_vertical(column, start_row, end_row, color) }.to output(BitmapEditor::NoImageError.new.message+"\n").to_stdout
+      end
+    end
+
+    context 'when image is present' do
+      context 'when pixel is within dimensions' do
+        before do
+          image = BitmapEditor::Image.new(width: 2, height: 4)
+          allow(subject).to receive(:image).and_return image
+        end
+
+        it 'prints Pixel colored message' do
+          expect { subject.color_image_vertical(column, start_row, end_row, color) }.to output("Vertical colored.\n").to_stdout
+        end
+      end
+
+      context 'when pixel is outside of dimensions' do
+        before do
+          image = BitmapEditor::Image.new(width: 2, height: 2)
+          allow(subject).to receive(:image).and_return image
+        end
+
+        it 'prints OutOfBoundError message' do
+          expect { subject.color_image_vertical(column, start_row, end_row, color) }.to output(BitmapEditor::OutOfBoundError.new.message+"\n").to_stdout
+        end
+      end
+    end
+  end
+
   private
     def exit_message
       welcome_message(BitmapEditor::Editor::EXIT_MESSAGE + "\n")
