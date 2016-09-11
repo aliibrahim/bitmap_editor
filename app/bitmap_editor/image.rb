@@ -41,6 +41,16 @@ module BitmapEditor
       @grid[row-1][column-1] = color
     end
 
+    def color_vertical(column, start_row, end_row, color)
+      column, start_row, end_row = column.to_i, start_row.to_i, end_row.to_i
+
+      raise OutOfBoundError unless vertical_range_within_boundary?(column, start_row, end_row)
+      start_row, end_row = [start_row, end_row].sort # Since the user can draw from bottom to top
+      (start_row..end_row).each do |row|
+        @grid[row-1][column-1] = color
+      end
+    end
+
     private
 
     def initialize_grid
@@ -49,6 +59,12 @@ module BitmapEditor
 
     def pixel_within_boundary?(row, column)
       row.between?(MIN_WIDTH, @width) && column.between?(MIN_HEIGHT, @height)
+    end
+
+    def vertical_range_within_boundary?(column, start_row, end_row)
+      column.between?(MIN_WIDTH, @width) &&
+      start_row.between?(MIN_HEIGHT, @height) &&
+      end_row.between?(MIN_HEIGHT, @height)
     end
 
   end

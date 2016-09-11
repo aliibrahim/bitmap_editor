@@ -57,4 +57,33 @@ RSpec.describe BitmapEditor::Image do
       end
     end
   end
+
+  describe '#color_vertical' do
+    context 'within valid dimensions' do
+
+      let(:expected_grid) {[['O','C'],['O','C'],['O','C']]}
+
+      before do
+        subject.grid = [['O','O'],['O','O'],['O','O']]
+      end
+
+      it 'vertically colors the image' do
+        subject.color_vertical(2, 1, 3, 'C')
+
+        expect(subject.grid).to eq expected_grid
+      end
+
+      it 'vertically colors the image from bottom to top' do
+        subject.color_vertical(2, 3, 1, 'C')
+
+        expect(subject.grid).to eq expected_grid
+      end
+    end
+
+    context 'with invalid dimensions' do
+      it 'raises OutOfBoundError exception' do
+        expect { subject.color_vertical(3, 1, 3, 'C') }.to raise_error(BitmapEditor::OutOfBoundError)
+      end
+    end
+  end
 end
