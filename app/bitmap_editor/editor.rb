@@ -84,7 +84,7 @@ module BitmapEditor
     private
 
     def get_command_from_user
-      Kernel.gets.chomp
+      Kernel.gets.chomp.upcase
     end
 
     def run_command(user_command)
