@@ -45,6 +45,17 @@ RSpec.describe BitmapEditor::Command do
       end
     end
 
+    context 'command C' do
+      before do
+        allow(subject).to receive(:command) { 'C' }
+      end
+      it 'allows editor to call clear_image' do
+        expect(subject.editor).to receive(:clear_image)
+
+        subject.process
+      end
+    end
+
     context 'unknown command' do
       before do
         allow(subject).to receive(:command) { 'abc' }

@@ -31,6 +31,8 @@ HELP
           when 'I'
             raise InvalidArguments if args.length != 2
             editor.create_image(*args)
+          when 'C'
+            editor.clear_image
           else
             puts UNKNOWN_COMMAND
         end

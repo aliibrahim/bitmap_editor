@@ -11,9 +11,9 @@ module BitmapEditor
     INVALID_WIDTH_MESSAGE  = "Invalid width given. Please ensure width is between #{MIN_WIDTH} and #{MAX_WIDTH}"
     INVALID_HEIGHT_MESSAGE = "Invalid height given. Please ensure height is between #{MIN_HEIGHT} and #{MAX_HEIGHT}"
 
-    def initialize(width:, height:)
+    def initialize(width:, height:, grid: nil)
       @width, @height =  width, height
-      @grid = initialize_grid
+      initialize_grid
     end
 
     def valid?
@@ -30,10 +30,14 @@ module BitmapEditor
       false
     end
 
+    def clear!
+      initialize_grid
+    end
+
     private
 
     def initialize_grid
-      Array.new(height) { Array.new(width, 'O') }
+      @grid = Array.new(height) { Array.new(width, 'O') }
     end
   end
 end

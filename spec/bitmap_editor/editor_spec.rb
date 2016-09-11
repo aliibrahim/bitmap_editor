@@ -59,6 +59,26 @@ RSpec.describe BitmapEditor::Editor do
     end
   end
 
+  describe '#clear_image' do
+    context 'when image is not present' do
+
+      it 'prints NoImageError error message' do
+        expect { subject.clear_image }.to output(BitmapEditor::NoImageError.new.message+"\n").to_stdout
+      end
+    end
+
+    context 'when image is present' do
+      before do
+        image = BitmapEditor::Image.new(width: 10, height: 10)
+        allow(subject).to receive(:image).and_return image
+      end
+
+      it 'prints Image cleared. message' do
+        expect { subject.clear_image }.to output("Image cleared.\n").to_stdout
+      end
+    end
+  end
+
   private
     def exit_message
       welcome_message(BitmapEditor::Editor::EXIT_MESSAGE + "\n")

@@ -32,6 +32,16 @@ module BitmapEditor
       end
     end
 
+    def clear_image
+      begin
+        raise NoImageError unless image
+        image.clear!
+        puts 'Image cleared.'
+      rescue NoImageError => e
+        puts e
+      end
+    end
+
     private
 
     def get_command_from_user
@@ -52,6 +62,12 @@ module BitmapEditor
 
     def exit?
       @running == false
+    end
+  end
+
+  class NoImageError < StandardError
+    def initialize(message= "Please create an image first before trying this operation or press ? for help")
+      super(message)
     end
   end
 end
