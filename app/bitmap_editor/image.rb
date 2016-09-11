@@ -21,7 +21,7 @@ module BitmapEditor
       return true if @width.between?(MIN_WIDTH, MAX_WIDTH) && @height.between?(MIN_HEIGHT, MAX_HEIGHT)
 
       unless @width.between?(MIN_WIDTH, MAX_WIDTH)
-        @errors << INVALID_HEIGHT_MESSAGE
+        @errors << INVALID_WIDTH_MESSAGE
       end
       unless @height.between?(MIN_HEIGHT, MAX_HEIGHT)
         @errors << INVALID_HEIGHT_MESSAGE
