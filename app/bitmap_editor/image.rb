@@ -37,7 +37,7 @@ module BitmapEditor
     def color_pixel(row, column, color)
       row, column = row.to_i, column.to_i
 
-      raise OutOfBoundError unless row.between?(MIN_WIDTH, @width) && column.between?(MIN_HEIGHT, @height)
+      raise OutOfBoundError unless pixel_within_boundary?(row, column)
       @grid[row-1][column-1] = color
     end
 
@@ -46,5 +46,10 @@ module BitmapEditor
     def initialize_grid
       @grid = Array.new(height) { Array.new(width, 'O') }
     end
+
+    def pixel_within_boundary?(row, column)
+      row.between?(MIN_WIDTH, @width) && column.between?(MIN_HEIGHT, @height)
+    end
+
   end
 end
